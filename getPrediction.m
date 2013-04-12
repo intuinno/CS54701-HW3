@@ -1,4 +1,4 @@
-function rating = getPrediction(data, user, movie, numThreshold)
+function rating = getPrediction(data, user, movie, numThreshold, method)
 
 	%Get the Pearson similarity score for every users
 	simUsers = [];
@@ -10,11 +10,14 @@ function rating = getPrediction(data, user, movie, numThreshold)
     end
     
 	for i= 1:200
-		
-		simUsers(i) =  getPearsonScore(data, i, user, numThreshold);
+		if strcmp(method,'Pearson')
+    		simUsers(i) =  getPearsonScore(data, i, user, numThreshold);
+    
+        elseif strcmp(method, 'Cosine')
+            simUsers(i) = getCosineScore(data,i, user, numThreshold);
+        end
+    
     end
-    
-    
         
     sumSimilarity = sum( abs(simUsers) );
     

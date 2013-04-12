@@ -1,4 +1,4 @@
-function getRecommendationFile (filename, testData, trainData, numThreshold) 
+function getRecommendationFile (filename, testData, trainData, numThreshold, method) 
 
 %test5  = test10
 fid = fopen(filename,'w');
@@ -21,7 +21,7 @@ parfor i = 1:m
 	
 	if test5(i,3) == 0
 		
-        result(i) =  getPrediction(test, test5(i,1), test5(i,2), numThreshold) ;
+        result(i) =  getPrediction(test, test5(i,1), test5(i,2), numThreshold,method) ;
 	end
 end
 
