@@ -1,0 +1,25 @@
+close all
+clear
+
+load dataset
+
+if matlabpool('size') == 0 
+
+	matlabpool 
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+

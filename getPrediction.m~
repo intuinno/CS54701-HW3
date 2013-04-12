@@ -9,7 +9,7 @@ function rating = getPrediction(data, user, movie)
   %      disp ' I am here';
     end
     
-	for i= 1:200
+	parfor i= 1:200
 		
 		simUsers(i) =  getPearsonScore(data, i, user);
     end
@@ -23,7 +23,7 @@ function rating = getPrediction(data, user, movie)
     for i=1:200
         
         %mean( data(i, find(data(i,:))))
-        sumRatings = sumRatings + simUsers(i) * ( data(i, movie) - mean( data(i, find(data(i,:)))));
+        sumRatings = simUsers(i) * ( data(i, movie) - mean( data(i, find(data(i,:)))));
         
     end
     
@@ -34,11 +34,7 @@ function rating = getPrediction(data, user, movie)
     
     rating = mean( data(user, find(data(user,:)))) + sumRatings/sumSimilarity;
     
-    rating =  round(rating);
-    
-    if rating < 1 
-        rating = 1;
-    end
+    rating =  sumRatings/sumSimilarity
     
     end
     

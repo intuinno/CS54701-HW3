@@ -5,28 +5,17 @@ load dataset
 
 if matlabpool('size') == 0 
 
-	%matlabpool 
+	matlabpool 
 
 end
 
-test = train;
+tic
 
-[m n] = size(test5);
+getRecommendationFile('result5.txt',test5, train);
+getRecommendationFile('result10.txt',test10, train);
+getRecommendationFile('result20.txt',test20, train);
 
-%Read the test user rating
-for i = 1:m
-	test(test5(i,1),test5(i,2)) = test5(i,3);
-end
-
-%For every test user and movie pair calculate the movie
-
-parfor i = 1:m
-	i
-	if test5(i,3) == 0
-		getPrediction(test, test5(i,1), test5(i,2))
-	end
-end
-
+toc
 
 
 

@@ -5,14 +5,17 @@ function y = getPearsonScore(data, user1, user2)
 	% Get the list of shared movie item
 	si = [];
 	
-	for movie = 1:1000 
-		if data(user1,movie) * data(user2, movie) > 0 
-			
-			si = [si movie];
-			
-		end
-	end
+% 	for movie = 1:1000 
+% 		if data(user1,movie) * data(user2, movie) > 0 
+% 			
+% 			si = [si movie];
+% 			
+% 		end
+% 	end
 	
+mul = data(user1,:) .* data(user2,:);
+si = find(mul);
+
 	%Now the si has the movie item both reviewed
 	
 	n = length(si);
