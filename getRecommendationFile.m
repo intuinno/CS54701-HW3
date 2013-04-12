@@ -1,4 +1,4 @@
-function getRecommendationFile (filename, testData, trainData) 
+function getRecommendationFile (filename, testData, trainData, numThreshold) 
 
 %test5  = test10
 fid = fopen(filename,'w');
@@ -21,7 +21,7 @@ parfor i = 1:m
 	
 	if test5(i,3) == 0
 		
-        result(i) =  getPrediction(test, test5(i,1), test5(i,2)) ;
+        result(i) =  getPrediction(test, test5(i,1), test5(i,2), numThreshold) ;
 	end
 end
 
@@ -31,7 +31,7 @@ for i = 1:m
             disp 'something bad'
         end
         
-        fprintf(fid,'%d  %d  %d\n',  test5(i,1), test5(i,2), result(i) );
+        fprintf(fid,'%d %d %d\n',  test5(i,1), test5(i,2), result(i) );
     end
     
     

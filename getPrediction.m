@@ -1,4 +1,4 @@
-function rating = getPrediction(data, user, movie)
+function rating = getPrediction(data, user, movie, numThreshold)
 
 	%Get the Pearson similarity score for every users
 	simUsers = [];
@@ -11,7 +11,7 @@ function rating = getPrediction(data, user, movie)
     
 	for i= 1:200
 		
-		simUsers(i) =  getPearsonScore(data, i, user);
+		simUsers(i) =  getPearsonScore(data, i, user, numThreshold);
     end
     
     
@@ -32,15 +32,18 @@ function rating = getPrediction(data, user, movie)
         
     else 
     
-    rating = mean( data(user, find(data(user,:)))) + sumRatings/sumSimilarity;
+        rating = mean( data(user, find(data(user,:)))) + sumRatings/sumSimilarity;
+    end
     
     rating =  round(rating);
     
     if rating < 1 
         rating = 1;
+    elseif rating > 5 
+        rating =5;    
     end
     
-    end
+   
     
     
 end

@@ -1,5 +1,5 @@
 
-function y = getPearsonScore(data, user1, user2)
+function y = getPearsonScore(data, user1, user2, numThreshold)
 
 
 	% Get the list of shared movie item
@@ -20,7 +20,7 @@ si = find(mul);
 	
 	n = length(si);
 	
-	if n == 0
+	if n < numThreshold
 		y=0;
 		return ;
 	end
