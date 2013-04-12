@@ -17,14 +17,24 @@ end
 %For every test user and movie pair calculate the movie
 result = [];
 
-for i = 1:m
+parfor i = 1:m
 	
 	if test5(i,3) == 0
 		
-        fprintf('%d  %d  %d\n',  test5(i,1), test5(i,2), round(getPrediction(test, test5(i,1), test5(i,2))) );
+        result(i) =  getPrediction(test, test5(i,1), test5(i,2)) ;
 	end
 end
 
-fprintf(fid,'%d  %d  %d\n',  test5(i,1), test5(i,2), round(getPrediction(test, test5(i,1), test5(i,2))) );
+for i = 1:m
+    if test5(i,3) == 0
+        if result(i) == 0 
+            disp 'something bad'
+        end
+        
+        fprintf(fid,'%d  %d  %d\n',  test5(i,1), test5(i,2), result(i) );
+    end
+    
+    
 end
 
+fclose(fid);
