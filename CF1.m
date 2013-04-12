@@ -11,9 +11,9 @@ end
 
 tic
 
-getRecommendationFile('result5.txt',test5, train, 4);
-getRecommendationFile('result10.txt',test10, train, 7 );
-getRecommendationFile('result20.txt',test20, train, 15);
+getRecommendationFile('result5.txt',test5, train, 1);
+getRecommendationFile('result10.txt',test10, train, 8 );
+getRecommendationFile('result20.txt',test20, train, 16);
 
 toc
 
