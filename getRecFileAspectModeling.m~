@@ -1,0 +1,94 @@
+function getRecFileAspectModeling (testData, filename, M_yz, Std_yz,globalMean, globalStd)
+
+
+test5 = testData;
+test = [];
+testPzu = [];
+
+[m n] = size(test5);
+
+
+%Read the test user rating
+for i = 1:m
+	test(test5(i,1),test5(i,2)) = test5(i,3);
+end
+
+
+[numTestUser numTestMovie] = size(test);
+smooth = 5;
+
+numTestMovie = length(find( test(test5(1,1),:) ));
+%do normalization for test user
+for i=test5(1,1):numTestUser
+     meanUser(i) = (sum( test(i, find(test(i,:))) ) + smooth * globalMean) / (numTestMovie + smooth);
+     stdUser(i) = (sum( (test(i, find(test(i,:))) - meanUser(i) ).^2 )  + smooth * globalStd^2) / (numTestMovie + smooth);
+%     stdUser(i) = std( test(i, find(test(i,:))) );
+
+    
+end
+
+
+%Do the normalization
+%origRatings will contain original ratings
+%ratings will contain normalized ratings
+
+origTest = test;
+
+
+
+for i = test5(1,1):numTestUser
+    
+    test(i,:) = (test(i,:)-meanUser(i)) / stdUser(i);
+    
+end
+
+
+
+for i = test5(1,1):numTestUser
+    
+%For every test user , get the latent class testPzu
+testPzu(i,:) = getLatentClass( test(i,:) , M_yz, Std_yz ) ;
+
+end
+
+
+
+for i = 1:m
+	
+	if test5(i,3) == 0
+        
+        
+        result(i) =  sum(testPzu(test5(i,1) ) .* M_yz(test5(i,2)) * stdUser(test5(i,1)) + meanUser(test5(i,1)));
+        
+        result(i) = round(result(i)); 
+        
+        if result(i) > 5 
+            result(i) = 5;
+        elseif result(i) < 1
+            result(i) = 1;
+        end
+        
+    
+    end
+end
+
+
+fid = fopen(filename,'w');
+
+for i = 1:m
+    if test5(i,3) == 0
+        if result(i) == 0 
+            disp 'something bad'
+        end
+        
+        fprintf(fid, '%d %d %d\n',  test5(i,1), test5(i,2), result(i) );
+    end
+    
+    
+end
+
+fclose(fid);
+
+end
+
+
