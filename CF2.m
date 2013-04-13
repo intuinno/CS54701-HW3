@@ -18,7 +18,7 @@ q = 1;
 
 numIteration = 500;
 
-numLatentClass = 3;
+numLatentClass = 2;
 
 beta = 1;
 
